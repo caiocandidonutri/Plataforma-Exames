@@ -132,3 +132,55 @@ export interface Exam {
     timestamp: string
   }
 }
+
+export interface MetricaMonetizacao {
+  id: string
+  data: string
+  mrr: number
+  arr: number
+  totalAssinantes: number
+  assinantesAtivos: number
+  assinantesCancelados: number
+  assinantesSuspensos: number
+  cac: number
+  ltv: number
+  churnRate: number
+  ticketMedio: number
+  receitaNovosClientes: number
+  receitaClientesExistentes: number
+  custoAquisicaoTotal: number
+  metadados?: Record<string, any>
+}
+
+export interface RelatorioAssinante {
+  id: string
+  assinanteId: string
+  dataRelatorio: string
+  planoAtual: 'basico' | 'pro' | 'empresa'
+  dataInicioAssinatura: string
+  dataProximaRenovacao: string
+  valorMensal: number
+  status: 'ativo' | 'cancelado' | 'suspenso' | 'expirado'
+  motivoCancelamento?: string
+  tempoAssinaturaDias: number
+  examesProcessados: number
+  relatoriosGerados: number
+  conversasWhatsapp: number
+  usoPlataformaPercentual: number
+  riscoChurn: 'baixo' | 'medio' | 'alto'
+  recomendacao?: string
+}
+
+export interface PrevisaoFinanceira {
+  id: string
+  dataPrevisao: string
+  periodo: 'proximo_mes' | 'proximo_trimestre' | 'proximo_ano'
+  mrrPrevisto: number
+  arrPrevisto: number
+  assinantesPrevistos: number
+  churnPrevisto: number
+  receitaNovosClientesPrevista: number
+  cenario: 'conservador' | 'realista' | 'otimista'
+  confianca: number
+  metadados?: Record<string, any>
+}

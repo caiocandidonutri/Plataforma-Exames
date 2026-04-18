@@ -13,6 +13,7 @@ import Report from './pages/Report'
 import Dashboard from './pages/Dashboard'
 import LandingPage from './pages/LandingPage'
 import LeadSuccess from './pages/LeadSuccess'
+import AdminDashboard from './pages/admin/AdminDashboard'
 
 const App = () => (
   <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/assinatura" element={<Subscription />} />
           <Route path="/consultas" element={<Appointments />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
         <Route path="/relatorio/:id" element={<Report />} />
         <Route path="/landing-page" element={<LandingPage />} />
