@@ -1,5 +1,16 @@
-import { Home, FileText, Users, Settings, Activity, CreditCard, Calendar } from 'lucide-react'
+import {
+  Home,
+  FileText,
+  Users,
+  Settings,
+  Activity,
+  CreditCard,
+  Calendar,
+  Shield,
+} from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { supabase } from '@/lib/supabase/client'
 import {
   Sidebar,
   SidebarContent,
@@ -19,8 +30,31 @@ const items = [
   { title: 'Assinatura', url: '/assinatura', icon: CreditCard },
 ]
 
+const adminItems = [
+  { title: 'Painel Admin', url: '/admin/dashboard', icon: Settings },
+  { title: 'Auditoria', url: '/admin/auditoria', icon: Shield },
+]
+
 export function AppSidebar() {
   const location = useLocation()
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    const checkRole = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+      if (session?.user) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single()
+        setIsAdmin(data?.role === 'admin' || data?.role === 'marketing')
+      }
+    }
+    checkRole()
+  }, [])
 
   return (
     <Sidebar>
@@ -48,6 +82,26 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {isAdmin && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Administração</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {adminItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={location.pathname === item.url}>
+                      <Link to={item.url}>
+                        <item.icon className="w-4 h-4" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
     </Sidebar>
   )
