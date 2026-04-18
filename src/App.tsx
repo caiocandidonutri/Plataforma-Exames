@@ -10,6 +10,7 @@ import Appointments from './pages/Appointments'
 import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
 import Report from './pages/Report'
+import Dashboard from './pages/Dashboard'
 
 const App = () => (
   <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/integracoes" element={<Integrations />} />
           <Route path="/assinatura" element={<Subscription />} />
           <Route path="/consultas" element={<Appointments />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="/relatorio/:id" element={<Report />} />
         <Route path="*" element={<NotFound />} />
