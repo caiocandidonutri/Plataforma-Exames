@@ -1,10 +1,54 @@
 import { Patient, Exam, Recommendation, ResultItem, ProtocoloExame } from '@/types'
 
 export const mockPatients: Record<string, Patient> = {
-  'PT-001': { id: 'PT-001', name: 'Maria Silva', age: 45, sex: 'F' },
-  'PT-002': { id: 'PT-002', name: 'João Santos', age: 32, sex: 'M' },
-  'PT-003': { id: 'PT-003', name: 'Ana Costa', age: 58, sex: 'F' },
+  'PT-001': {
+    id: 'PT-001',
+    name: 'Maria Silva',
+    age: 45,
+    sex: 'F',
+    plan: 'pro',
+    subscriptionStatus: 'ativo',
+  },
+  'PT-002': {
+    id: 'PT-002',
+    name: 'João Santos',
+    age: 32,
+    sex: 'M',
+    plan: 'basic',
+    subscriptionStatus: 'ativo',
+  },
+  'PT-003': {
+    id: 'PT-003',
+    name: 'Ana Costa',
+    age: 58,
+    sex: 'F',
+    plan: 'basic',
+    subscriptionStatus: 'expirado',
+  },
 }
+
+export const mockAppointments = [
+  {
+    id: 'APP-001',
+    patientId: 'PT-001',
+    professionalName: 'Dr. Caio Cândido',
+    date: '2026-04-20T10:00:00Z',
+    type: 'Retorno Nutricional',
+    status: 'confirmada' as const,
+    calendarSynced: true,
+  },
+]
+
+export const mockPayments = [
+  {
+    id: 'PAY-001',
+    patientId: 'PT-001',
+    amount: 149.9,
+    date: '2026-03-15T12:00:00Z',
+    method: 'credit_card' as const,
+    status: 'succeeded' as const,
+  },
+]
 
 const generateResults = (): ResultItem[] => [
   {

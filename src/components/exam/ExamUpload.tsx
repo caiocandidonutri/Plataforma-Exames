@@ -12,8 +12,9 @@ import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { useToast } from '@/hooks/use-toast'
 import { useNavigate } from 'react-router-dom'
-import { mockExams, mockProtocols, mockPatients } from '@/lib/data'
+import { mockProtocols } from '@/lib/data'
 import { Exam, ResultItem, Recommendation, ProtocoloExame } from '@/types'
+import useAppStore from '@/stores/use-app-store'
 import { cn } from '@/lib/utils'
 
 export function ExamUpload() {
@@ -24,6 +25,7 @@ export function ExamUpload() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { toast } = useToast()
   const navigate = useNavigate()
+  const { currentUser, exams, addExam } = useAppStore()
 
   const onDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -37,6 +39,26 @@ export function ExamUpload() {
 
   const handleFileProcess = async (file: File) => {
     setError(null)
+
+    if (currentUser.plan === 'basic') {
+      const currentMonth = new Date().getMonth()
+      const currentYear = new Date().getFullYear()
+      const monthExams = exams.filter((e) => {
+        const d = new Date(e.date)
+        return (
+          e.patientId === currentUser.id &&
+          d.getMonth() === currentMonth &&
+          d.getFullYear() === currentYear
+        )
+      })
+      if (monthExams.length >= 3) {
+        setError(
+          'Você atingiu o limite de 3 exames por mês. Faça upgrade para o plano Pro para análises ilimitadas e acesso a todos os recursos.',
+        )
+        return
+      }
+    }
+
     const validTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/gif']
     if (!validTypes.includes(file.type) || file.size > 50 * 1024 * 1024) {
       setError('Arquivo inválido. Formatos aceitos: PDF, JPG, PNG, GIF. Tamanho máximo: 50MB.')
@@ -96,8 +118,8 @@ export function ExamUpload() {
     }
 
     const examId = `EX-2026-${Math.floor(Math.random() * 1000 + 100)}`
-    const patientId = 'PT-001'
-    const patient = mockPatients[patientId]
+    const patientId = currentUser.id
+    const patient = currentUser
 
     let items: ResultItem[] = []
     let recommendations: Recommendation[] = []
@@ -151,7 +173,7 @@ export function ExamUpload() {
       categories: protocol ? [{ name: protocol.Tipo_Exame, items }] : [],
       recommendations,
       audit: {
-        userId: 'USR-999',
+        userId: currentUser.id,
         correlationId: `CORR-${Math.random().toString(36).slice(2, 10)}`,
         timestamp:
           new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' }).replace(' ', 'T') +
@@ -159,7 +181,7 @@ export function ExamUpload() {
       },
     }
 
-    mockExams.unshift(newExam)
+    addExam(newExam)
 
     setIsUploading(false)
     setIsOpen(false)

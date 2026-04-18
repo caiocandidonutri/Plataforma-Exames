@@ -1,4 +1,4 @@
-import { Home, FileText, Users, Settings, Activity } from 'lucide-react'
+import { Home, FileText, Users, Settings, Activity, CreditCard, Calendar } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   Sidebar,
@@ -14,9 +14,9 @@ import {
 
 const items = [
   { title: 'Início', url: '/', icon: Home },
-  { title: 'Exames', url: '/', icon: FileText },
-  { title: 'Pacientes', url: '/', icon: Users },
-  { title: 'Configurações', url: '/', icon: Settings },
+  { title: 'Integrações', url: '/integracoes', icon: Activity },
+  { title: 'Consultas', url: '/consultas', icon: Calendar },
+  { title: 'Assinatura', url: '/assinatura', icon: CreditCard },
 ]
 
 export function AppSidebar() {

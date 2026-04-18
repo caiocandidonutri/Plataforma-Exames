@@ -1,10 +1,15 @@
 export type Status = 'Pendente' | 'Transcrito' | 'Analisado'
 
+export type PlanType = 'basic' | 'pro'
+export type SubscriptionStatus = 'ativo' | 'expirado' | 'cancelado' | 'suspenso' | 'trial'
+
 export interface Patient {
   id: string
   name: string
   age: number
   sex: 'M' | 'F'
+  plan: PlanType
+  subscriptionStatus: SubscriptionStatus
 }
 
 export interface ResultItem {
@@ -73,6 +78,25 @@ export interface LabIntegration {
   lastSyncDate?: string
   metadata?: Record<string, any>
   type: IntegrationType
+}
+
+export interface Appointment {
+  id: string
+  patientId: string
+  professionalName: string
+  date: string
+  type: string
+  status: 'pendente' | 'confirmada' | 'cancelada'
+  calendarSynced: boolean
+}
+
+export interface Payment {
+  id: string
+  patientId: string
+  amount: number
+  date: string
+  method: 'credit_card' | 'pix' | 'boleto'
+  status: 'succeeded' | 'failed' | 'pending'
 }
 
 export interface Exam {

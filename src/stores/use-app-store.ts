@@ -1,9 +1,13 @@
 import { useSyncExternalStore } from 'react'
-import { Exam, LabIntegration } from '@/types'
+import { Exam, LabIntegration, Patient, Appointment, Payment } from '@/types'
+import { mockExams, mockPatients, mockAppointments, mockPayments } from '@/lib/data'
 
 interface AppState {
   integrations: LabIntegration[]
   exams: Exam[]
+  currentUser: Patient
+  appointments: Appointment[]
+  payments: Payment[]
 }
 
 let state: AppState = {
@@ -30,7 +34,10 @@ let state: AppState = {
       type: 'polling',
     },
   ],
-  exams: [],
+  exams: mockExams,
+  currentUser: mockPatients['PT-002'], // Padrão: Plano Básico para teste do limite
+  appointments: mockAppointments,
+  payments: mockPayments,
 }
 
 const listeners = new Set<() => void>()
@@ -70,6 +77,23 @@ export default function useAppStore() {
       setAppState((prev) => ({
         exams: prev.exams.map((e) => (e.id === id ? { ...e, ...updates } : e)),
       }))
+    },
+    setCurrentUser: (id: string) => {
+      setAppState({ currentUser: mockPatients[id] })
+    },
+    updateCurrentUserPlan: (
+      plan: 'basic' | 'pro',
+      status: 'ativo' | 'expirado' | 'cancelado' | 'suspenso' | 'trial',
+    ) => {
+      setAppState((prev) => ({
+        currentUser: { ...prev.currentUser, plan, subscriptionStatus: status },
+      }))
+    },
+    addAppointment: (app: Appointment) => {
+      setAppState((prev) => ({ appointments: [...prev.appointments, app] }))
+    },
+    addPayment: (payment: Payment) => {
+      setAppState((prev) => ({ payments: [payment, ...prev.payments] }))
     },
   }
 }

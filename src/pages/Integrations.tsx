@@ -11,7 +11,9 @@ import {
   Clock,
   Link2,
   Search,
+  Lock,
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -41,8 +43,15 @@ import { decryptAES256 } from '@/lib/crypto'
 import { cn } from '@/lib/utils'
 
 export default function Integrations() {
-  const { integrations, exams, addIntegration, updateIntegration, addExam, updateExam } =
-    useAppStore()
+  const {
+    integrations,
+    exams,
+    addIntegration,
+    updateIntegration,
+    addExam,
+    updateExam,
+    currentUser,
+  } = useAppStore()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [syncingId, setSyncingId] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -169,6 +178,24 @@ export default function Integrations() {
   const filteredIntegrations = integrations.filter((i) =>
     i.labName.toLowerCase().includes(searchTerm.toLowerCase()),
   )
+
+  if (currentUser.plan !== 'pro') {
+    return (
+      <div className="flex flex-col items-center justify-center p-12 text-center border-2 border-dashed rounded-xl bg-slate-50 border-slate-200 mt-8">
+        <div className="p-4 bg-amber-100 text-amber-600 rounded-full mb-4">
+          <Lock className="w-8 h-8" />
+        </div>
+        <h2 className="text-2xl font-bold mb-2 text-slate-900">Recurso Exclusivo Pro</h2>
+        <p className="text-muted-foreground mb-6 max-w-md">
+          A integração automática com laboratórios e sincronização em tempo real são exclusivas para
+          assinantes do plano Pro.
+        </p>
+        <Button asChild size="lg" className="bg-primary">
+          <Link to="/assinatura">Fazer Upgrade para Pro</Link>
+        </Button>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">

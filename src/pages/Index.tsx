@@ -1,188 +1,192 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FileText, Clock, AlertTriangle, ArrowRight, Activity } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ExamUpload } from '@/components/exam/ExamUpload'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
+  FileText,
+  Download,
+  Lock,
+  Calendar,
+  ChevronRight,
+  Activity,
+  AlertCircle,
+} from 'lucide-react'
+import { format, subDays, isAfter } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import useAppStore from '@/stores/use-app-store'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { mockExams, mockPatients } from '@/lib/data'
-import { Status } from '@/types'
-
-const statusColors: Record<Status, string> = {
-  Pendente: 'border-muted-foreground/30 text-muted-foreground bg-transparent',
-  Transcrito: 'bg-blue-100 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400',
-  Analisado:
-    'bg-emerald-100 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400',
-}
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu'
+import { ExamUpload } from '@/components/exam/ExamUpload'
+import { toast } from 'sonner'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export default function Index() {
-  const [filter, setFilter] = useState('all')
-  const [search, setSearch] = useState('')
+  const { currentUser, exams } = useAppStore()
+  const [isExporting, setIsExporting] = useState(false)
 
-  const filteredExams = mockExams.filter((exam) => {
-    const matchStatus = filter === 'all' || exam.status === filter
-    const patientName = mockPatients[exam.patientId]?.name.toLowerCase() || ''
-    const matchSearch =
-      patientName.includes(search.toLowerCase()) ||
-      exam.id.toLowerCase().includes(search.toLowerCase())
-    return matchStatus && matchSearch
-  })
+  const userExams = exams.filter((e) => e.patientId === currentUser.id)
+
+  const thirtyDaysAgo = subDays(new Date(), 30)
+
+  const visibleExams =
+    currentUser.plan === 'basic'
+      ? userExams.filter((e) => isAfter(new Date(e.date), thirtyDaysAgo))
+      : userExams
+
+  const hiddenExamsCount = userExams.length - visibleExams.length
+
+  const handleExport = (format: string) => {
+    setIsExporting(true)
+    toast.info(`Gerando relatório evolutivo em ${format}...`, {
+      description: 'Isolando dados em ambiente seguro.',
+    })
+
+    setTimeout(() => {
+      toast.success(`Relatório em ${format} pronto!`, {
+        description: 'O download foi iniciado.',
+      })
+      setIsExporting(false)
+    }, 2500)
+  }
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'Analisado':
+        return <Badge className="bg-emerald-500">Analisado</Badge>
+      case 'Transcrito':
+        return (
+          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+            Transcrito
+          </Badge>
+        )
+      case 'Pendente':
+        return <Badge variant="outline">Pendente</Badge>
+      default:
+        return <Badge>{status}</Badge>
+    }
+  }
 
   return (
-    <div className="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl animate-fade-in">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-            Painel de Controle
-          </h1>
-          <p className="text-muted-foreground mt-1 text-sm md:text-base">
-            Acompanhe e analise exames laboratoriais.
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Meus Exames</h1>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Gerencie e analise seus resultados laboratoriais.
           </p>
         </div>
-        <ExamUpload />
+
+        <div className="flex items-center gap-2">
+          {currentUser.plan === 'pro' ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="gap-2" disabled={isExporting}>
+                  <Download className="w-4 h-4" /> Exportar Histórico
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Formato do Relatório</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleExport('PDF')}>
+                  PDF (Completo com Gráficos)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleExport('Excel')}>
+                  Excel (Dados Brutos)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleExport('CSV')}>
+                  CSV (Integração)
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="gap-2 text-slate-400 border-slate-200">
+                  <Lock className="w-4 h-4" /> Exportar Histórico
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 p-4">
+                <div className="text-center">
+                  <Lock className="w-8 h-8 mx-auto text-amber-500 mb-2" />
+                  <p className="text-sm font-medium mb-1">Recurso Pro</p>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    A exportação de histórico e relatórios evolutivos é exclusiva do plano Pro.
+                  </p>
+                  <Button asChild size="sm" className="w-full">
+                    <Link to="/assinatura">Fazer Upgrade</Link>
+                  </Button>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+
+          <ExamUpload />
+        </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3 mb-8">
-        <Card className="border-slate-200/60 shadow-subtle dark:border-slate-800">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total de Exames
-            </CardTitle>
-            <FileText className="h-4 w-4 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">1,284</div>
-            <p className="text-xs text-muted-foreground mt-1">+12% em relação ao mês anterior</p>
-          </CardContent>
-        </Card>
-        <Card className="border-slate-200/60 shadow-subtle dark:border-slate-800">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Análises Pendentes
-            </CardTitle>
-            <Clock className="h-4 w-4 text-amber-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-amber-600 dark:text-amber-400">42</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Aguardando inteligência diagnóstica
+      {currentUser.plan === 'basic' && hiddenExamsCount > 0 && (
+        <Alert className="bg-amber-50 border-amber-200">
+          <AlertCircle className="h-4 w-4 text-amber-600" />
+          <AlertTitle className="text-amber-800">Histórico Limitado</AlertTitle>
+          <AlertDescription className="text-amber-700 mt-1 flex flex-col sm:flex-row sm:items-center gap-2">
+            <span>
+              Você tem {hiddenExamsCount} exame(s) arquivado(s) com mais de 30 dias. O plano Básico
+              permite visualizar apenas o histórico recente.
+            </span>
+            <Link to="/assinatura" className="font-semibold underline shrink-0">
+              Desbloquear histórico com o Pro
+            </Link>
+          </AlertDescription>
+        </Alert>
+      )}
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {visibleExams.map((exam) => (
+          <Link key={exam.id} to={`/exame/${exam.id}`}>
+            <Card className="hover:shadow-md transition-shadow cursor-pointer h-full border-slate-200 hover:border-primary/50 group">
+              <CardHeader className="pb-3">
+                <div className="flex justify-between items-start">
+                  <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <FileText className="w-5 h-5 text-primary" />
+                  </div>
+                  {getStatusBadge(exam.status)}
+                </div>
+                <CardTitle className="mt-4 text-lg">
+                  {exam.categories.length > 0
+                    ? exam.categories.map((c) => c.name).join(', ')
+                    : 'Exame em Processamento'}
+                </CardTitle>
+                <CardDescription className="flex items-center gap-1.5 mt-2">
+                  <Calendar className="w-3.5 h-3.5" />
+                  {format(new Date(exam.date), "dd 'de' MMM, yyyy", { locale: ptBR })}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="flex items-center text-sm text-primary font-medium mt-2">
+                  Ver resultados detalhados <ChevronRight className="w-4 h-4 ml-1" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+
+        {visibleExams.length === 0 && (
+          <div className="col-span-full py-16 text-center border-2 border-dashed rounded-xl border-slate-200">
+            <Activity className="w-12 h-12 mx-auto text-slate-300 mb-4" />
+            <h3 className="text-lg font-medium text-slate-900">Nenhum exame recente</h3>
+            <p className="text-muted-foreground mt-1 max-w-sm mx-auto">
+              Você ainda não enviou nenhum exame ou não possui exames nos últimos 30 dias.
             </p>
-          </CardContent>
-        </Card>
-        <Card className="border-slate-200/60 shadow-subtle dark:border-slate-800">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Alertas Críticos
-            </CardTitle>
-            <AlertTriangle className="h-4 w-4 text-rose-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-rose-600 dark:text-rose-400">7</div>
-            <p className="text-xs text-muted-foreground mt-1">Requerem atenção imediata</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="border-slate-200/60 shadow-subtle dark:border-slate-800 overflow-hidden">
-        <div className="p-4 border-b bg-slate-50/50 dark:bg-slate-900/50 flex flex-col sm:flex-row gap-4 justify-between items-center">
-          <h2 className="font-semibold text-lg">Exames Recentes</h2>
-          <div className="flex w-full sm:w-auto gap-2">
-            <Input
-              placeholder="Buscar paciente ou ID..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="max-w-[200px] h-9 text-sm bg-background"
-            />
-            <Select value={filter} onValueChange={setFilter}>
-              <SelectTrigger className="w-[140px] h-9 text-sm bg-background">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todos</SelectItem>
-                <SelectItem value="Pendente">Pendente</SelectItem>
-                <SelectItem value="Transcrito">Transcrito</SelectItem>
-                <SelectItem value="Analisado">Analisado</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
-        </div>
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader className="bg-slate-50 dark:bg-slate-900">
-              <TableRow>
-                <TableHead className="w-[120px]">ID do Exame</TableHead>
-                <TableHead>Paciente</TableHead>
-                <TableHead className="hidden md:table-cell">Data</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Ação</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredExams.map((exam) => (
-                <TableRow
-                  key={exam.id}
-                  className="group transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-900/80"
-                >
-                  <TableCell className="font-mono text-xs font-medium text-muted-foreground">
-                    {exam.id}
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {mockPatients[exam.patientId]?.name || 'Desconhecido'}
-                    <div className="text-xs text-muted-foreground md:hidden">{exam.date}</div>
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell text-muted-foreground text-sm">
-                    {new Date(exam.date).toLocaleDateString('pt-BR')}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={exam.status === 'Pendente' ? 'outline' : 'secondary'}
-                      className={statusColors[exam.status]}
-                    >
-                      {exam.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      asChild
-                      className="group-hover:bg-primary group-hover:text-primary-foreground transition-all"
-                    >
-                      <Link to={`/exame/${exam.id}`}>
-                        Detalhes
-                        <ArrowRight className="ml-2 w-3 h-3 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {filteredExams.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center h-32 text-muted-foreground">
-                    Nenhum exame encontrado.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-      </Card>
+        )}
+      </div>
     </div>
   )
 }
