@@ -16,6 +16,7 @@ import LeadSuccess from './pages/LeadSuccess'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AuditDashboard from './pages/admin/AuditDashboard'
 import NotificationSettings from './pages/admin/NotificationSettings'
+import ClinicSettings from './pages/admin/ClinicSettings'
 
 const App = () => (
   <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/consultas" element={<Appointments />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/clinica" element={<ClinicSettings />} />
           <Route path="/admin/auditoria" element={<AuditDashboard />} />
           <Route path="/admin/notificacoes" element={<NotificationSettings />} />
         </Route>

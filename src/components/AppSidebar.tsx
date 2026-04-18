@@ -8,6 +8,7 @@ import {
   Calendar,
   Shield,
   Bell,
+  Building,
 } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
@@ -33,6 +34,7 @@ const items = [
 
 const adminItems = [
   { title: 'Painel Admin', url: '/admin/dashboard', icon: Settings },
+  { title: 'Identidade da Clínica', url: '/admin/clinica', icon: Building },
   { title: 'Auditoria', url: '/admin/auditoria', icon: Shield },
   { title: 'Notificações', url: '/admin/notificacoes', icon: Bell },
 ]
