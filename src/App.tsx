@@ -15,6 +15,7 @@ import LandingPage from './pages/LandingPage'
 import LeadSuccess from './pages/LeadSuccess'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AuditDashboard from './pages/admin/AuditDashboard'
+import NotificationSettings from './pages/admin/NotificationSettings'
 
 const App = () => (
   <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/auditoria" element={<AuditDashboard />} />
+          <Route path="/admin/notificacoes" element={<NotificationSettings />} />
         </Route>
         <Route path="/relatorio/:id" element={<Report />} />
         <Route path="/landing-page" element={<LandingPage />} />

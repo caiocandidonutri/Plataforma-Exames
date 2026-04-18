@@ -7,6 +7,7 @@ import {
   CreditCard,
   Calendar,
   Shield,
+  Bell,
 } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
@@ -33,6 +34,7 @@ const items = [
 const adminItems = [
   { title: 'Painel Admin', url: '/admin/dashboard', icon: Settings },
   { title: 'Auditoria', url: '/admin/auditoria', icon: Shield },
+  { title: 'Notificações', url: '/admin/notificacoes', icon: Bell },
 ]
 
 export function AppSidebar() {
