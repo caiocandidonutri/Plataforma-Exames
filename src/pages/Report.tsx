@@ -27,6 +27,21 @@ export default function Report() {
   const report = relatorios.find((r) => r.id === id)
   const exam = exams.find((e) => e.id === report?.exameId)
 
+  const isPremium = report?.tipoRelatorio === 'premium'
+
+  // Generate historical mock data for charts (Only for premium)
+  const historicalData = useMemo(() => {
+    if (!isPremium) return []
+    return Array.from({ length: 6 }).map((_, i) => {
+      const d = new Date()
+      d.setMonth(d.getMonth() - (5 - i))
+      return {
+        month: d.toLocaleDateString('pt-BR', { month: 'short' }),
+        valor: 100 + Math.random() * 50 - i * 5,
+      }
+    })
+  }, [isPremium])
+
   useEffect(() => {
     if (searchParams.get('print') === 'true') {
       const timer = setTimeout(() => window.print(), 1000)
@@ -47,7 +62,6 @@ export default function Report() {
   }
 
   const patient = mockPatients[exam.patientId]
-  const isPremium = report.tipoRelatorio === 'premium'
 
   // Determine urgency config
   const urgencyConfig = {
@@ -83,19 +97,6 @@ export default function Report() {
   const recommendations = exam.recommendations?.length
     ? exam.recommendations
     : getAnalyzedRecommendations()
-
-  // Generate historical mock data for charts (Only for premium)
-  const historicalData = useMemo(() => {
-    if (!isPremium) return []
-    return Array.from({ length: 6 }).map((_, i) => {
-      const d = new Date()
-      d.setMonth(d.getMonth() - (5 - i))
-      return {
-        month: d.toLocaleDateString('pt-BR', { month: 'short' }),
-        valor: 100 + Math.random() * 50 - i * 5,
-      }
-    })
-  }, [isPremium])
 
   return (
     <div className="min-h-screen bg-slate-100 p-4 sm:p-8 print:bg-white print:p-0">
