@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Loader2, User, Calendar, Beaker, BrainCircuit } from 'lucide-react'
+import {
+  ArrowLeft,
+  Loader2,
+  User,
+  Calendar,
+  Beaker,
+  BrainCircuit,
+  FileText,
+  Download,
+} from 'lucide-react'
+import useAppStore from '@/stores/use-app-store'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -18,9 +28,11 @@ import { RecommendationsPanel } from '@/components/exam/RecommendationsPanel'
 export default function ExamDetails() {
   const { id } = useParams<{ id: string }>()
   const { toast } = useToast()
+  const { currentUser, relatorios, addRelatorio } = useAppStore()
 
   const [exam, setExam] = useState<Exam | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false)
   const [recommendations, setRecommendations] = useState<Recommendation[]>([])
   const [status, setStatus] = useState<Status>('Pendente')
 
@@ -41,6 +53,40 @@ export default function ExamDetails() {
     )
 
   const patient = mockPatients[exam.patientId]
+  const existingReport = relatorios.find((r) => r.exameId === exam.id)
+
+  const handleGenerateReport = () => {
+    setIsGeneratingReport(true)
+    setTimeout(() => {
+      const hasCritical = recommendations.some((r) => r.priority === 'Alta')
+      const hasModerate = recommendations.some((r) => r.priority === 'Média')
+      const urgencia = hasCritical ? 'critico' : hasModerate ? 'moderado' : 'normal'
+
+      const newReport = {
+        id: `REL-${Date.now()}`,
+        pacienteId: currentUser.id,
+        exameId: exam.id,
+        dataGeracao: new Date().toISOString(),
+        tipoRelatorio: currentUser.plan === 'pro' ? 'premium' : 'basico',
+        statusUrgencia: urgencia,
+        urlDownload: '',
+        telefoneProfissional: '5511999999999',
+        emailProfissional: 'contato@drexames.com',
+        dataExpiracao: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      }
+
+      newReport.urlDownload = `/relatorio/${newReport.id}?print=true`
+
+      addRelatorio(newReport as any)
+      setIsGeneratingReport(false)
+      toast({
+        title: 'Relatório Gerado',
+        description: 'O PDF está pronto para download.',
+        className:
+          'bg-indigo-50 text-indigo-900 border-indigo-200 dark:bg-indigo-950 dark:text-indigo-100',
+      })
+    }, 1500)
+  }
 
   const handleAnalyze = () => {
     setIsAnalyzing(true)
@@ -109,24 +155,59 @@ export default function ExamDetails() {
               </div>
             </div>
 
-            {status === 'Transcrito' && (
-              <Button
-                size="lg"
-                onClick={handleAnalyze}
-                disabled={isAnalyzing}
-                className="w-full md:w-auto shadow-md transition-all active:scale-95"
-              >
-                {isAnalyzing ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Analisando Dados...
-                  </>
-                ) : (
-                  <>
-                    <BrainCircuit className="mr-2 h-5 w-5" /> Gerar Análise Diagnóstica
-                  </>
-                )}
-              </Button>
-            )}
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              {status === 'Transcrito' && (
+                <Button
+                  size="lg"
+                  onClick={handleAnalyze}
+                  disabled={isAnalyzing}
+                  className="w-full sm:w-auto shadow-md transition-all active:scale-95"
+                >
+                  {isAnalyzing ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Analisando Dados...
+                    </>
+                  ) : (
+                    <>
+                      <BrainCircuit className="mr-2 h-5 w-5" /> Gerar Análise Diagnóstica
+                    </>
+                  )}
+                </Button>
+              )}
+
+              {status === 'Analisado' && !existingReport && (
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={handleGenerateReport}
+                  disabled={isGeneratingReport}
+                  className="w-full sm:w-auto shadow-sm"
+                >
+                  {isGeneratingReport ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Gerando PDF...
+                    </>
+                  ) : (
+                    <>
+                      <FileText className="mr-2 h-5 w-5" /> Gerar Relatório PDF
+                    </>
+                  )}
+                </Button>
+              )}
+
+              {existingReport && (
+                <Button
+                  size="lg"
+                  variant="default"
+                  asChild
+                  className="w-full sm:w-auto shadow-md bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-600 dark:hover:bg-indigo-700"
+                >
+                  <a href={existingReport.urlDownload} target="_blank" rel="noopener noreferrer">
+                    <Download className="mr-2 h-5 w-5" /> Baixar PDF
+                  </a>
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* Empty State / No Data */}

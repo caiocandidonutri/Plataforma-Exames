@@ -99,6 +99,25 @@ export interface Payment {
   status: 'succeeded' | 'failed' | 'pending'
 }
 
+export type TipoRelatorio = 'basico' | 'completo' | 'premium'
+export type StatusUrgencia = 'normal' | 'moderado' | 'critico'
+
+export interface RelatorioExame {
+  id: string
+  pacienteId: string
+  exameId: string
+  dataGeracao: string
+  tipoRelatorio: TipoRelatorio
+  statusUrgencia: StatusUrgencia
+  urlDownload: string
+  profissionalId?: string
+  telefoneProfissional?: string
+  emailProfissional?: string
+  dataExpiracao?: string
+  historicoExames?: any[]
+  metadados?: Record<string, any>
+}
+
 export interface Exam {
   id: string
   patientId: string

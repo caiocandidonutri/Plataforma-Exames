@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import { Exam, LabIntegration, Patient, Appointment, Payment } from '@/types'
+import { Exam, LabIntegration, Patient, Appointment, Payment, RelatorioExame } from '@/types'
 import { mockExams, mockPatients, mockAppointments, mockPayments } from '@/lib/data'
 
 interface AppState {
@@ -8,6 +8,7 @@ interface AppState {
   currentUser: Patient
   appointments: Appointment[]
   payments: Payment[]
+  relatorios: RelatorioExame[]
 }
 
 let state: AppState = {
@@ -38,6 +39,7 @@ let state: AppState = {
   currentUser: mockPatients['PT-002'], // Padrão: Plano Básico para teste do limite
   appointments: mockAppointments,
   payments: mockPayments,
+  relatorios: [],
 }
 
 const listeners = new Set<() => void>()
@@ -94,6 +96,9 @@ export default function useAppStore() {
     },
     addPayment: (payment: Payment) => {
       setAppState((prev) => ({ payments: [payment, ...prev.payments] }))
+    },
+    addRelatorio: (relatorio: RelatorioExame) => {
+      setAppState((prev) => ({ relatorios: [...prev.relatorios, relatorio] }))
     },
   }
 }
