@@ -9,6 +9,7 @@ import {
   BrainCircuit,
   FileText,
   Download,
+  MessageSquare,
 } from 'lucide-react'
 import useAppStore from '@/stores/use-app-store'
 import { Button } from '@/components/ui/button'
@@ -24,6 +25,8 @@ import { mockExams, mockPatients, getAnalyzedRecommendations } from '@/lib/data'
 import { Exam, Recommendation, Status } from '@/types'
 import { ResultCard } from '@/components/exam/ResultCard'
 import { RecommendationsPanel } from '@/components/exam/RecommendationsPanel'
+import { WhatsAppHistory } from '@/components/exam/WhatsAppHistory'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 
 export default function ExamDetails() {
   const { id } = useParams<{ id: string }>()
@@ -156,6 +159,29 @@ export default function ExamDetails() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="w-full sm:w-auto shadow-sm text-emerald-700 border-emerald-200 hover:bg-emerald-50 hover:text-emerald-800 dark:text-emerald-400 dark:border-emerald-800/50 dark:hover:bg-emerald-950/50"
+                  >
+                    <MessageSquare className="mr-2 h-5 w-5" /> WhatsApp
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-full sm:max-w-md p-0 flex flex-col">
+                  <SheetHeader className="p-6 border-b">
+                    <SheetTitle>Comunicação do Paciente</SheetTitle>
+                  </SheetHeader>
+                  <div className="flex-1 overflow-hidden p-6 pb-8">
+                    <WhatsAppHistory
+                      patientId={patient?.id || ''}
+                      professionalName="Dr. Caio Cândido"
+                    />
+                  </div>
+                </SheetContent>
+              </Sheet>
+
               {status === 'Transcrito' && (
                 <Button
                   size="lg"

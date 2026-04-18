@@ -1,6 +1,7 @@
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useMemo } from 'react'
 import useAppStore from '@/stores/use-app-store'
+import { useToast } from '@/hooks/use-toast'
 import {
   CheckCircle2,
   AlertTriangle,
@@ -23,6 +24,7 @@ export default function Report() {
   const { id } = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
   const { relatorios, exams } = useAppStore()
+  const { toast } = useToast()
 
   const report = relatorios.find((r) => r.id === id)
   const exam = exams.find((e) => e.id === report?.exameId)
@@ -392,16 +394,37 @@ export default function Report() {
                 </div>
               </div>
               <Button
-                asChild
+                onClick={(e) => {
+                  e.preventDefault()
+
+                  // Mock validation (FLOW-06_STEP-02)
+                  const isAvailable = true
+                  if (!isAvailable) {
+                    toast({
+                      title: 'Profissional Indisponível',
+                      description:
+                        'O profissional não está disponível no momento. Tente enviar um e-mail.',
+                      variant: 'destructive',
+                    })
+                    return
+                  }
+
+                  const defaultMsg = `Olá Dr. Caio, gostaria de discutir meus resultados do exame (ID: ${exam.id}).`
+                  const phone = report.telefoneProfissional?.replace(/\D/g, '') || '5511999999999'
+                  const link = `https://wa.me/${phone}?text=${encodeURIComponent(defaultMsg)}`
+
+                  toast({
+                    title: 'Redirecionando para WhatsApp',
+                    description: 'A tentativa de contato foi registrada no histórico do paciente.',
+                    className:
+                      'bg-emerald-50 text-emerald-900 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-100',
+                  })
+
+                  window.open(link, '_blank', 'noopener,noreferrer')
+                }}
                 className="bg-emerald-500 hover:bg-emerald-600 text-white w-full sm:w-auto print:hidden"
               >
-                <a
-                  href={`https://wa.me/${report.telefoneProfissional?.replace(/\D/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Chamar no WhatsApp
-                </a>
+                Chamar no WhatsApp
               </Button>
             </div>
           </section>
