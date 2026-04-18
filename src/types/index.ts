@@ -59,6 +59,22 @@ export interface ProtocoloExame {
   Fonte_Conhecimento: string
 }
 
+export type IntegrationStatus = 'ativo' | 'inativo' | 'erro' | 'pendente_autenticacao'
+export type IntegrationType = 'polling' | 'webhook'
+
+export interface LabIntegration {
+  id: string
+  patientId: string
+  labName: string
+  apiKey: string
+  apiEndpoint: string
+  status: IntegrationStatus
+  configDate: string
+  lastSyncDate?: string
+  metadata?: Record<string, any>
+  type: IntegrationType
+}
+
 export interface Exam {
   id: string
   patientId: string
@@ -66,6 +82,7 @@ export interface Exam {
   status: Status
   categories: ExamCategory[]
   recommendations: Recommendation[]
+  sourceLab?: string
   audit?: {
     userId: string
     correlationId: string
