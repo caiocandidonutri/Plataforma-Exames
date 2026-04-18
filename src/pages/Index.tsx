@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FileText, Clock, AlertTriangle, ArrowRight, Activity } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ExamUpload } from '@/components/exam/ExamUpload'
 import {
   Table,
   TableBody,
@@ -54,10 +55,7 @@ export default function Index() {
             Acompanhe e analise exames laboratoriais.
           </p>
         </div>
-        <Button className="gap-2 shadow-sm">
-          <Activity className="w-4 h-4" />
-          Novo Exame
-        </Button>
+        <ExamUpload />
       </div>
 
       <div className="grid gap-4 md:grid-cols-3 mb-8">

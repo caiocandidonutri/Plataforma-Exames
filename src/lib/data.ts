@@ -1,4 +1,4 @@
-import { Patient, Exam, Recommendation, ResultItem } from '@/types'
+import { Patient, Exam, Recommendation, ResultItem, ProtocoloExame } from '@/types'
 
 export const mockPatients: Record<string, Patient> = {
   'PT-001': { id: 'PT-001', name: 'Maria Silva', age: 45, sex: 'F' },
@@ -172,6 +172,59 @@ export const mockExams: Exam[] = [
   },
 ]
 
+export const mockProtocols: ProtocoloExame[] = [
+  {
+    id: 'PROTO-HEMO',
+    Tipo_Exame: 'Hemoglobina',
+    Parametros_Esperados: [{ nome: 'Hemoglobina', unidade: 'g/dL' }],
+    Regras_Analise: {
+      F: { min: 12.0, max: 15.5 },
+      M: { min: 13.5, max: 17.5 },
+    },
+    Interpretacao_Diagnostica_Geral: 'Proteína nos glóbulos vermelhos que transporta oxigênio.',
+    Relacoes_Com_Outros_Exames: ['Ferritina', 'Ferro Sérico', 'Hematócrito'],
+    Diagnosticos_Diferenciais: ['Anemia Ferropriva', 'Talassemia', 'Sangramento crônico'],
+    Templates_Recomendacao_Nutricional: [
+      {
+        condicao: 'baixo',
+        alimentos_sugeridos: ['Carnes vermelhas', 'Feijão', 'Espinafre', 'Fígado'],
+        alimentos_evitados: ['Excesso de cálcio junto com ferro', 'Café logo após refeições'],
+      },
+    ],
+    Status: 'ativo',
+    Data_Criacao: '2026-04-18T10:00:00.000Z',
+    Data_Atualizacao: '2026-04-18T10:00:00.000Z',
+    Fonte_Conhecimento: 'Diretrizes Brasileiras de Hematologia',
+  },
+  {
+    id: 'PROTO-VITD',
+    Tipo_Exame: 'Vitamina D',
+    Parametros_Esperados: [{ nome: '25-OH Vitamina D', unidade: 'ng/mL' }],
+    Regras_Analise: {
+      F: { min: 20, max: 60 },
+      M: { min: 20, max: 60 },
+    },
+    Interpretacao_Diagnostica_Geral: 'Essencial para a absorção de cálcio e saúde óssea.',
+    Relacoes_Com_Outros_Exames: ['Cálcio Ionizado', 'PTH', 'Fósforo'],
+    Diagnosticos_Diferenciais: [
+      'Osteoporose',
+      'Hiperparatireoidismo Secundário',
+      'Deficiência nutricional',
+    ],
+    Templates_Recomendacao_Nutricional: [
+      {
+        condicao: 'baixo',
+        alimentos_sugeridos: ['Salmão', 'Sardinha', 'Gema de ovo', 'Cogumelos'],
+        alimentos_evitados: [],
+      },
+    ],
+    Status: 'ativo',
+    Data_Criacao: '2026-04-18T10:00:00.000Z',
+    Data_Atualizacao: '2026-04-18T10:00:00.000Z',
+    Fonte_Conhecimento: 'Sociedade Brasileira de Endocrinologia e Metabologia',
+  },
+]
+
 export const getAnalyzedRecommendations = (): Recommendation[] => [
   {
     id: 'REC-01',
@@ -186,6 +239,8 @@ export const getAnalyzedRecommendations = (): Recommendation[] => [
     type: 'Nutricional',
     text: 'Reduzir ingestão de carboidratos simples para controle de Triglicerídeos (180 mg/dL) e Glicemia (105 mg/dL).',
     source: 'Protocolo Nutricional ADA',
+    suggestedFoods: ['Aveia', 'Vegetais folhosos', 'Peixes', 'Azeite de oliva'],
+    avoidedFoods: ['Doces', 'Pão branco', 'Refrigerantes', 'Frituras'],
   },
   {
     id: 'REC-03',

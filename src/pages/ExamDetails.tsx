@@ -100,6 +100,11 @@ export default function ExamDetails() {
                     <Calendar className="w-4 h-4" /> Coleta:{' '}
                     {new Date(exam.date).toLocaleDateString('pt-BR')}
                   </span>
+                  {exam.audit && (
+                    <span className="flex items-center gap-1.5 opacity-60 text-xs">
+                      • Tracking: {exam.audit.correlationId}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

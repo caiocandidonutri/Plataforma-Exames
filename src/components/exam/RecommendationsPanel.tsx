@@ -71,6 +71,45 @@ export function RecommendationsPanel({ recommendations }: { recommendations: Rec
             </AlertTitle>
             <AlertDescription className="mt-2 text-sm text-foreground/80 leading-relaxed">
               {rec.text}
+
+              {rec.suggestedFoods && rec.suggestedFoods.length > 0 && (
+                <div className="mt-3 bg-emerald-500/10 rounded-md p-2 border border-emerald-500/20">
+                  <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 block mb-1">
+                    Alimentos Sugeridos:
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {rec.suggestedFoods.map((food, idx) => (
+                      <Badge
+                        key={idx}
+                        variant="secondary"
+                        className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/20 text-[10px] px-1.5 py-0"
+                      >
+                        {food}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {rec.avoidedFoods && rec.avoidedFoods.length > 0 && (
+                <div className="mt-2 bg-rose-500/10 rounded-md p-2 border border-rose-500/20">
+                  <span className="text-[11px] font-semibold text-rose-700 dark:text-rose-400 block mb-1">
+                    Alimentos a Evitar:
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {rec.avoidedFoods.map((food, idx) => (
+                      <Badge
+                        key={idx}
+                        variant="secondary"
+                        className="bg-rose-500/10 text-rose-700 dark:text-rose-400 hover:bg-rose-500/20 text-[10px] px-1.5 py-0"
+                      >
+                        {food}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="mt-3 text-[10px] text-muted-foreground/70 font-medium">
                 Fonte: {rec.source}
               </div>
