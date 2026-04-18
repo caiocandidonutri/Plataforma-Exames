@@ -4,8 +4,7 @@ import { createClient } from 'jsr:@supabase/supabase-js@2'
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers':
-    'authorization, x-client-info, x-supabase-client-platform, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, x-supabase-client-platform, apikey, content-type',
 }
 
 Deno.serve(async (req: Request) => {
@@ -17,7 +16,7 @@ Deno.serve(async (req: Request) => {
 
     // Bypass RLS for webhook background processing
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-      auth: { autoRefreshToken: false, persistSession: false },
+      auth: { autoRefreshToken: false, persistSession: false }
     })
 
     const payload = await req.json()
@@ -28,25 +27,21 @@ Deno.serve(async (req: Request) => {
         const from = msg.from
         const text = msg.text?.body || msg.text
         const messageId = msg.id || msg.message_id
-
-        if (!from || !text) continue
+        
+        if (!from || !text) continue;
 
         // Clean phone number format for matching
         const cleanPhone = from.replace(/\D/g, '')
-
+        
         // Match patient based on phone
         const { data: patients } = await supabaseAdmin.from('patients').select('id, phone')
-
-        const matchedPatient = patients?.find((p) => p.phone?.replace(/\D/g, '') === cleanPhone)
-
+        
+        const matchedPatient = patients?.find(p => p.phone?.replace(/\D/g, '') === cleanPhone)
+        
         if (matchedPatient) {
           // Find primary professional
-          const { data: prof } = await supabaseAdmin
-            .from('contatos_profissionais')
-            .select('id')
-            .limit(1)
-            .single()
-
+          const { data: prof } = await supabaseAdmin.from('contatos_profissionais').select('id').limit(1).single()
+          
           if (prof) {
             // Insert received message into history
             await supabaseAdmin.from('historico_whatsapp').insert({
@@ -57,21 +52,21 @@ Deno.serve(async (req: Request) => {
               conteudo: text,
               status: 'entregue',
               whatsapp_message_id: messageId,
-              metadados: { webhook_payload: msg },
+              metadados: { webhook_payload: msg }
             })
           }
         }
       }
     }
 
-    return new Response(JSON.stringify({ status: 'recebido' }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    return new Response(JSON.stringify({ status: 'recebido' }), { 
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
     })
   } catch (err: any) {
     console.error('Webhook Error:', err)
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    return new Response(JSON.stringify({ error: err.message }), { 
+      status: 500, 
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
     })
   }
 })
