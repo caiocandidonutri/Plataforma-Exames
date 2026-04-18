@@ -1,0 +1,984 @@
+// AVOID UPDATING THIS FILE DIRECTLY. It is automatically generated.
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.4"
+  }
+  public: {
+    Tables: {
+      ai_personas: {
+        Row: {
+          created_at: string
+          id: string
+          knowledge_base: string
+          name: string
+          system_prompt: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          knowledge_base: string
+          name: string
+          system_prompt: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          knowledge_base?: string
+          name?: string
+          system_prompt?: string
+        }
+        Relationships: []
+      }
+      api_settings: {
+        Row: {
+          access_token: string
+          api_version: string | null
+          business_id: string | null
+          business_public_key: string | null
+          connection_status: string | null
+          display_phone_number: string | null
+          encryption_status: string | null
+          id: string
+          migration_intent_id: string | null
+          phone_name: string | null
+          phone_number_id: string
+          solution_id: string | null
+          updated_at: string | null
+          waba_id: string
+        }
+        Insert: {
+          access_token: string
+          api_version?: string | null
+          business_id?: string | null
+          business_public_key?: string | null
+          connection_status?: string | null
+          display_phone_number?: string | null
+          encryption_status?: string | null
+          id?: string
+          migration_intent_id?: string | null
+          phone_name?: string | null
+          phone_number_id: string
+          solution_id?: string | null
+          updated_at?: string | null
+          waba_id: string
+        }
+        Update: {
+          access_token?: string
+          api_version?: string | null
+          business_id?: string | null
+          business_public_key?: string | null
+          connection_status?: string | null
+          display_phone_number?: string | null
+          encryption_status?: string | null
+          id?: string
+          migration_intent_id?: string | null
+          phone_name?: string | null
+          phone_number_id?: string
+          solution_id?: string | null
+          updated_at?: string | null
+          waba_id?: string
+        }
+        Relationships: []
+      }
+      appointments: {
+        Row: {
+          appointment_date: string
+          created_at: string
+          id: string
+          location: string | null
+          patient_id: string | null
+          status: string
+        }
+        Insert: {
+          appointment_date: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          patient_id?: string | null
+          status?: string
+        }
+        Update: {
+          appointment_date?: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          patient_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automated_flows: {
+        Row: {
+          attachment_url: string | null
+          created_at: string
+          flow_type: string
+          has_attachment: boolean | null
+          id: string
+          patient_id: string | null
+          scheduled_date: string
+          status: string
+        }
+        Insert: {
+          attachment_url?: string | null
+          created_at?: string
+          flow_type: string
+          has_attachment?: boolean | null
+          id?: string
+          patient_id?: string | null
+          scheduled_date: string
+          status?: string
+        }
+        Update: {
+          attachment_url?: string | null
+          created_at?: string
+          flow_type?: string
+          has_attachment?: boolean | null
+          id?: string
+          patient_id?: string | null
+          scheduled_date?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automated_flows_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      broadcasts: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          title: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          title: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          title?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "broadcasts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_records: {
+        Row: {
+          amount: number
+          created_at: string
+          date: string
+          description: string
+          id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          date?: string
+          description: string
+          id?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          date?: string
+          description?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      global_settings: {
+        Row: {
+          id: string
+          key: string
+          value: Json
+        }
+        Insert: {
+          id?: string
+          key: string
+          value: Json
+        }
+        Update: {
+          id?: string
+          key?: string
+          value?: Json
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          broadcast_id: string | null
+          content: string
+          created_at: string
+          id: string
+          patient_id: string | null
+          platform: string
+          sender_type: string
+          status: string
+        }
+        Insert: {
+          broadcast_id?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          patient_id?: string | null
+          platform?: string
+          sender_type: string
+          status?: string
+        }
+        Update: {
+          broadcast_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          patient_id?: string | null
+          platform?: string
+          sender_type?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_broadcast_id_fkey"
+            columns: ["broadcast_id"]
+            isOneToOne: false
+            referencedRelation: "broadcasts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patients: {
+        Row: {
+          ai_enabled: boolean
+          created_at: string
+          id: string
+          last_interaction: string | null
+          name: string
+          needs_attention: boolean
+          origin: string
+          phone: string | null
+          priority_level: string
+          status: string
+        }
+        Insert: {
+          ai_enabled?: boolean
+          created_at?: string
+          id?: string
+          last_interaction?: string | null
+          name: string
+          needs_attention?: boolean
+          origin?: string
+          phone?: string | null
+          priority_level?: string
+          status?: string
+        }
+        Update: {
+          ai_enabled?: boolean
+          created_at?: string
+          id?: string
+          last_interaction?: string | null
+          name?: string
+          needs_attention?: boolean
+          origin?: string
+          phone?: string | null
+          priority_level?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          is_active: boolean
+          role: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name: string
+          id: string
+          is_active?: boolean
+          role?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          role?: string
+        }
+        Relationships: []
+      }
+      social_connections: {
+        Row: {
+          access_token: string | null
+          id: string
+          owner_id: string | null
+          page_id: string | null
+          persona_id: string | null
+          platform: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          access_token?: string | null
+          id?: string
+          owner_id?: string | null
+          page_id?: string | null
+          persona_id?: string | null
+          platform: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          access_token?: string | null
+          id?: string
+          owner_id?: string | null
+          page_id?: string | null
+          persona_id?: string | null
+          platform?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "social_connections_persona_id_fkey"
+            columns: ["persona_id"]
+            isOneToOne: false
+            referencedRelation: "ai_personas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      whatsapp_instances: {
+        Row: {
+          created_at: string
+          friendly_name: string | null
+          id: string
+          instance_key: string
+          instance_name: string
+          owner_id: string
+          persona_id: string | null
+          phone_number: string | null
+          qr_code_base64: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          friendly_name?: string | null
+          id?: string
+          instance_key: string
+          instance_name: string
+          owner_id: string
+          persona_id?: string | null
+          phone_number?: string | null
+          qr_code_base64?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          friendly_name?: string | null
+          id?: string
+          instance_key?: string
+          instance_name?: string
+          owner_id?: string
+          persona_id?: string | null
+          phone_number?: string | null
+          qr_code_base64?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_instances_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "whatsapp_instances_persona_id_fkey"
+            columns: ["persona_id"]
+            isOneToOne: false
+            referencedRelation: "ai_personas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      admin_manage_user: {
+        Args: {
+          p_action: string
+          p_email: string
+          p_full_name: string
+          p_is_active: boolean
+          p_password: string
+          p_role: string
+          p_user_id: string
+        }
+        Returns: Json
+      }
+      get_marketing_metrics: { Args: never; Returns: Json }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const
+
+
+// ====== DATABASE EXTENDED CONTEXT (auto-generated) ======
+// This section contains actual PostgreSQL column types, constraints, RLS policies,
+// functions, triggers, indexes and materialized views not present in the type definitions above.
+// IMPORTANT: The TypeScript types above map UUID, TEXT, VARCHAR all to "string".
+// Use the COLUMN TYPES section below to know the real PostgreSQL type for each column.
+// Always use the correct PostgreSQL type when writing SQL migrations.
+
+// --- COLUMN TYPES (actual PostgreSQL types) ---
+// Use this to know the real database type when writing migrations.
+// "string" in TypeScript types above may be uuid, text, varchar, timestamptz, etc.
+// Table: ai_personas
+//   id: uuid (not null, default: gen_random_uuid())
+//   name: text (not null)
+//   system_prompt: text (not null)
+//   knowledge_base: text (not null)
+//   created_at: timestamp with time zone (not null, default: now())
+// Table: api_settings
+//   id: uuid (not null, default: gen_random_uuid())
+//   waba_id: text (not null)
+//   phone_number_id: text (not null)
+//   access_token: text (not null)
+//   api_version: text (nullable, default: 'v21.0'::text)
+//   updated_at: timestamp with time zone (nullable, default: now())
+//   solution_id: text (nullable)
+//   business_id: text (nullable)
+//   business_public_key: text (nullable)
+//   encryption_status: text (nullable)
+//   migration_intent_id: text (nullable)
+//   phone_name: text (nullable)
+//   display_phone_number: text (nullable)
+//   connection_status: text (nullable, default: 'disconnected'::text)
+// Table: appointments
+//   id: uuid (not null, default: gen_random_uuid())
+//   patient_id: uuid (nullable)
+//   appointment_date: timestamp with time zone (not null)
+//   status: text (not null, default: 'scheduled'::text)
+//   created_at: timestamp with time zone (not null, default: now())
+//   location: text (nullable, default: 'Todas as Cidades'::text)
+// Table: automated_flows
+//   id: uuid (not null, default: gen_random_uuid())
+//   patient_id: uuid (nullable)
+//   flow_type: text (not null)
+//   scheduled_date: timestamp with time zone (not null)
+//   status: text (not null, default: 'pending'::text)
+//   has_attachment: boolean (nullable, default: false)
+//   attachment_url: text (nullable)
+//   created_at: timestamp with time zone (not null, default: now())
+// Table: broadcasts
+//   id: uuid (not null, default: gen_random_uuid())
+//   title: text (not null)
+//   type: text (not null)
+//   created_at: timestamp with time zone (not null, default: now())
+//   created_by: uuid (nullable)
+// Table: financial_records
+//   id: uuid (not null, default: gen_random_uuid())
+//   amount: numeric (not null)
+//   description: text (not null)
+//   date: timestamp with time zone (not null, default: now())
+//   created_at: timestamp with time zone (not null, default: now())
+// Table: global_settings
+//   id: uuid (not null, default: gen_random_uuid())
+//   key: text (not null)
+//   value: jsonb (not null)
+// Table: messages
+//   id: uuid (not null, default: gen_random_uuid())
+//   patient_id: uuid (nullable)
+//   content: text (not null)
+//   sender_type: text (not null)
+//   platform: text (not null, default: 'whatsapp'::text)
+//   created_at: timestamp with time zone (not null, default: now())
+//   status: text (not null, default: 'sent'::text)
+//   broadcast_id: uuid (nullable)
+// Table: patients
+//   id: uuid (not null, default: gen_random_uuid())
+//   name: text (not null)
+//   phone: text (nullable)
+//   status: text (not null, default: 'Interested'::text)
+//   last_interaction: timestamp with time zone (nullable, default: now())
+//   created_at: timestamp with time zone (not null, default: now())
+//   origin: text (not null, default: 'whatsapp'::text)
+//   needs_attention: boolean (not null, default: false)
+//   priority_level: text (not null, default: 'medium'::text)
+//   ai_enabled: boolean (not null, default: true)
+// Table: profiles
+//   id: uuid (not null)
+//   full_name: text (not null)
+//   role: text (not null, default: 'staff'::text)
+//   created_at: timestamp with time zone (not null, default: now())
+//   is_active: boolean (not null, default: true)
+//   email: text (nullable)
+// Table: social_connections
+//   id: uuid (not null, default: gen_random_uuid())
+//   platform: text (not null)
+//   status: text (not null, default: 'disconnected'::text)
+//   access_token: text (nullable)
+//   page_id: text (nullable)
+//   persona_id: uuid (nullable)
+//   updated_at: timestamp with time zone (not null, default: now())
+//   owner_id: uuid (nullable)
+// Table: whatsapp_instances
+//   id: uuid (not null, default: gen_random_uuid())
+//   instance_name: text (not null)
+//   instance_key: text (not null)
+//   status: text (not null, default: 'disconnected'::text)
+//   qr_code_base64: text (nullable)
+//   phone_number: text (nullable)
+//   owner_id: uuid (not null)
+//   created_at: timestamp with time zone (not null, default: now())
+//   updated_at: timestamp with time zone (not null, default: now())
+//   friendly_name: text (nullable)
+//   persona_id: uuid (nullable)
+
+// --- CONSTRAINTS ---
+// Table: ai_personas
+//   PRIMARY KEY ai_personas_pkey: PRIMARY KEY (id)
+// Table: api_settings
+//   PRIMARY KEY api_settings_pkey: PRIMARY KEY (id)
+// Table: appointments
+//   FOREIGN KEY appointments_patient_id_fkey: FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
+//   PRIMARY KEY appointments_pkey: PRIMARY KEY (id)
+// Table: automated_flows
+//   FOREIGN KEY automated_flows_patient_id_fkey: FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
+//   PRIMARY KEY automated_flows_pkey: PRIMARY KEY (id)
+// Table: broadcasts
+//   FOREIGN KEY broadcasts_created_by_fkey: FOREIGN KEY (created_by) REFERENCES profiles(id) ON DELETE SET NULL
+//   PRIMARY KEY broadcasts_pkey: PRIMARY KEY (id)
+// Table: financial_records
+//   PRIMARY KEY financial_records_pkey: PRIMARY KEY (id)
+// Table: global_settings
+//   UNIQUE global_settings_key_key: UNIQUE (key)
+//   PRIMARY KEY global_settings_pkey: PRIMARY KEY (id)
+// Table: messages
+//   FOREIGN KEY messages_broadcast_id_fkey: FOREIGN KEY (broadcast_id) REFERENCES broadcasts(id) ON DELETE SET NULL
+//   FOREIGN KEY messages_patient_id_fkey: FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
+//   PRIMARY KEY messages_pkey: PRIMARY KEY (id)
+//   CHECK messages_sender_type_check: CHECK ((sender_type = ANY (ARRAY['patient'::text, 'staff'::text, 'ia'::text])))
+// Table: patients
+//   PRIMARY KEY patients_pkey: PRIMARY KEY (id)
+//   CHECK patients_priority_level_check: CHECK ((priority_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text])))
+// Table: profiles
+//   FOREIGN KEY profiles_id_fkey: FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE
+//   PRIMARY KEY profiles_pkey: PRIMARY KEY (id)
+//   CHECK profiles_role_check: CHECK ((role = ANY (ARRAY['admin'::text, 'vendedora'::text, 'estagiaria'::text, 'marketing'::text])))
+// Table: social_connections
+//   FOREIGN KEY social_connections_owner_id_fkey: FOREIGN KEY (owner_id) REFERENCES auth.users(id) ON DELETE CASCADE
+//   FOREIGN KEY social_connections_persona_id_fkey: FOREIGN KEY (persona_id) REFERENCES ai_personas(id) ON DELETE SET NULL
+//   PRIMARY KEY social_connections_pkey: PRIMARY KEY (id)
+//   CHECK social_connections_platform_check: CHECK ((platform = ANY (ARRAY['instagram'::text, 'facebook'::text, 'google'::text])))
+// Table: whatsapp_instances
+//   FOREIGN KEY whatsapp_instances_owner_id_fkey: FOREIGN KEY (owner_id) REFERENCES profiles(id) ON DELETE CASCADE
+//   FOREIGN KEY whatsapp_instances_persona_id_fkey: FOREIGN KEY (persona_id) REFERENCES ai_personas(id) ON DELETE SET NULL
+//   PRIMARY KEY whatsapp_instances_pkey: PRIMARY KEY (id)
+
+// --- ROW LEVEL SECURITY POLICIES ---
+// Table: ai_personas
+//   Policy "admin_mkt_all_ai_personas" (ALL, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text]))
+//     WITH CHECK: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text]))
+// Table: api_settings
+//   Policy "API settings delete admin only" (DELETE, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+//   Policy "API settings insert admin only" (INSERT, PERMISSIVE) roles={public}
+//     WITH CHECK: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+//   Policy "API settings select admin only" (SELECT, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+//   Policy "API settings update admin only" (UPDATE, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+// Table: appointments
+//   Policy "Appointments insertable by everyone" (INSERT, PERMISSIVE) roles={public}
+//     WITH CHECK: true
+//   Policy "Appointments updatable by everyone" (UPDATE, PERMISSIVE) roles={public}
+//     USING: true
+//   Policy "Appointments viewable by everyone" (SELECT, PERMISSIVE) roles={public}
+//     USING: true
+// Table: automated_flows
+//   Policy "automated_flows_delete" (DELETE, PERMISSIVE) roles={authenticated}
+//     USING: true
+//   Policy "automated_flows_insert" (INSERT, PERMISSIVE) roles={authenticated}
+//     WITH CHECK: true
+//   Policy "automated_flows_marketing_all" (ALL, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text]))
+//     WITH CHECK: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text]))
+//   Policy "automated_flows_select" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: true
+//   Policy "automated_flows_update" (UPDATE, PERMISSIVE) roles={authenticated}
+//     USING: true
+//     WITH CHECK: true
+// Table: broadcasts
+//   Policy "Broadcasts insertable by everyone" (INSERT, PERMISSIVE) roles={public}
+//     WITH CHECK: true
+//   Policy "Broadcasts updatable by everyone" (UPDATE, PERMISSIVE) roles={public}
+//     USING: true
+//   Policy "Broadcasts viewable by everyone" (SELECT, PERMISSIVE) roles={public}
+//     USING: true
+// Table: financial_records
+//   Policy "Financials are insertable by admin" (INSERT, PERMISSIVE) roles={public}
+//     WITH CHECK: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+//   Policy "Financials are viewable by admin" (SELECT, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+// Table: global_settings
+//   Policy "global_settings_all_admin" (ALL, PERMISSIVE) roles={authenticated}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+//     WITH CHECK: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+//   Policy "global_settings_manage_api_keys_marketing" (ALL, PERMISSIVE) roles={authenticated}
+//     USING: ((( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text])) AND (key = ANY (ARRAY['whatsapp_api_url'::text, 'whatsapp_api_token'::text, 'hostinger_api_url'::text, 'hostinger_api_token'::text])))
+//     WITH CHECK: ((( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text])) AND (key = ANY (ARRAY['whatsapp_api_url'::text, 'whatsapp_api_token'::text, 'hostinger_api_url'::text, 'hostinger_api_token'::text])))
+//   Policy "global_settings_select_authenticated" (SELECT, PERMISSIVE) roles={authenticated}
+//     USING: true
+// Table: messages
+//   Policy "Messages insertable by everyone" (INSERT, PERMISSIVE) roles={public}
+//     WITH CHECK: true
+//   Policy "Messages viewable by authorized" (SELECT, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'vendedora'::text, 'estagiaria'::text]))
+// Table: patients
+//   Policy "Patients are deletable by admin" (DELETE, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
+//   Policy "Patients are insertable by everyone" (INSERT, PERMISSIVE) roles={public}
+//     WITH CHECK: true
+//   Policy "Patients are updatable by everyone" (UPDATE, PERMISSIVE) roles={public}
+//     USING: true
+//   Policy "Patients are viewable by authorized" (SELECT, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'vendedora'::text, 'estagiaria'::text]))
+// Table: profiles
+//   Policy "Profiles are viewable by everyone" (SELECT, PERMISSIVE) roles={public}
+//     USING: true
+//   Policy "Profiles can be updated by admin" (UPDATE, PERMISSIVE) roles={public}
+//     USING: (( SELECT profiles_1.role    FROM profiles profiles_1   WHERE (profiles_1.id = auth.uid())) = 'admin'::text)
+// Table: social_connections
+//   Policy "social_connections_owner_all" (ALL, PERMISSIVE) roles={authenticated}
+//     USING: ((owner_id = auth.uid()) OR (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text])))
+//     WITH CHECK: ((owner_id = auth.uid()) OR (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text])))
+// Table: whatsapp_instances
+//   Policy "whatsapp_instances_owner_all" (ALL, PERMISSIVE) roles={authenticated}
+//     USING: ((owner_id = auth.uid()) OR (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text])))
+//     WITH CHECK: ((owner_id = auth.uid()) OR (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text])))
+
+// --- DATABASE FUNCTIONS ---
+// FUNCTION admin_manage_user(text, uuid, text, text, text, text, boolean)
+//   CREATE OR REPLACE FUNCTION public.admin_manage_user(p_action text, p_user_id uuid, p_email text, p_password text, p_full_name text, p_role text, p_is_active boolean)
+//    RETURNS jsonb
+//    LANGUAGE plpgsql
+//    SECURITY DEFINER
+//   AS $function$
+//   DECLARE
+//     v_uid uuid;
+//     v_admin_role text;
+//   BEGIN
+//     -- Verify caller is admin
+//     SELECT role INTO v_admin_role FROM public.profiles WHERE id = auth.uid();
+//     IF v_admin_role != 'admin' THEN
+//       RAISE EXCEPTION 'Acesso negado. Apenas administradores podem gerenciar usuários.';
+//     END IF;
+//   
+//     IF p_action = 'create' THEN
+//       v_uid := gen_random_uuid();
+//       INSERT INTO auth.users (
+//         id, instance_id, email, encrypted_password, email_confirmed_at, created_at, updated_at,
+//         raw_app_meta_data, raw_user_meta_data, is_super_admin, role, aud,
+//         confirmation_token, recovery_token, email_change_token_new, email_change, email_change_token_current,
+//         phone, phone_change, phone_change_token, reauthentication_token
+//       ) VALUES (
+//         v_uid, '00000000-0000-0000-0000-000000000000', p_email, crypt(p_password, gen_salt('bf')),
+//         NOW(), NOW(), NOW(),
+//         '{"provider": "email", "providers": ["email"]}',
+//         jsonb_build_object('name', p_full_name),
+//         false, 'authenticated', 'authenticated',
+//         '', '', '', '', '', NULL, '', '', ''
+//       );
+//       
+//       -- Triggers should have created the profile, so we just update it
+//       UPDATE public.profiles SET role = p_role, is_active = p_is_active, full_name = p_full_name, email = p_email WHERE id = v_uid;
+//       RETURN jsonb_build_object('success', true, 'id', v_uid);
+//   
+//     ELSIF p_action = 'update' THEN
+//       IF p_email IS NOT NULL THEN
+//         UPDATE auth.users SET email = p_email, updated_at = NOW() WHERE id = p_user_id;
+//       END IF;
+//       
+//       IF p_password IS NOT NULL AND p_password != '' THEN
+//         UPDATE auth.users SET encrypted_password = crypt(p_password, gen_salt('bf')), updated_at = NOW() WHERE id = p_user_id;
+//       END IF;
+//   
+//       UPDATE public.profiles SET 
+//         role = COALESCE(p_role, role), 
+//         is_active = COALESCE(p_is_active, is_active), 
+//         full_name = COALESCE(p_full_name, full_name),
+//         email = COALESCE(p_email, email)
+//       WHERE id = p_user_id;
+//       
+//       RETURN jsonb_build_object('success', true, 'id', p_user_id);
+//     ELSE
+//       RAISE EXCEPTION 'Ação inválida';
+//     END IF;
+//   END;
+//   $function$
+//   
+// FUNCTION get_marketing_metrics()
+//   CREATE OR REPLACE FUNCTION public.get_marketing_metrics()
+//    RETURNS jsonb
+//    LANGUAGE plpgsql
+//    SECURITY DEFINER
+//   AS $function$
+//   DECLARE
+//     v_role text;
+//     v_leads_total int;
+//     v_leads_by_origin jsonb;
+//     v_conversion_rate numeric;
+//     v_messages_volume int;
+//     v_weekly_data jsonb;
+//   BEGIN
+//     -- Check access
+//     SELECT role INTO v_role FROM public.profiles WHERE id = auth.uid();
+//     IF v_role NOT IN ('admin', 'vendedora', 'marketing') THEN
+//       RAISE EXCEPTION 'Acesso negado.';
+//     END IF;
+//   
+//     -- Leads Volume
+//     SELECT count(*) INTO v_leads_total FROM public.patients;
+//     
+//     SELECT jsonb_object_agg(origin, count) INTO v_leads_by_origin
+//     FROM (SELECT origin, count(*) FROM public.patients GROUP BY origin) t;
+//   
+//     -- Messages Volume
+//     SELECT count(*) INTO v_messages_volume FROM public.messages;
+//   
+//     -- Conversion Rate (Completed or Active flows / total)
+//     SELECT 
+//       CASE WHEN count(*) = 0 THEN 0 
+//       ELSE (count(*) FILTER (WHERE status IN ('Scheduled', 'Attended', 'Follow-up'))::numeric / count(*)) * 100 
+//       END INTO v_conversion_rate
+//     FROM public.patients;
+//   
+//     -- Aggregated weekly sample for charts
+//     v_weekly_data := '[
+//       {"name": "Seg", "leads": 40, "perdidos": 5},
+//       {"name": "Ter", "leads": 30, "perdidos": 2},
+//       {"name": "Qua", "leads": 55, "perdidos": 8},
+//       {"name": "Qui", "leads": 45, "perdidos": 3},
+//       {"name": "Sex", "leads": 60, "perdidos": 4},
+//       {"name": "Sáb", "leads": 25, "perdidos": 1},
+//       {"name": "Dom", "leads": 35, "perdidos": 2}
+//     ]'::jsonb;
+//   
+//     RETURN jsonb_build_object(
+//       'leads_total', v_leads_total,
+//       'leads_by_origin', COALESCE(v_leads_by_origin, '{}'::jsonb),
+//       'conversion_rate', round(v_conversion_rate, 1),
+//       'messages_volume', v_messages_volume,
+//       'chart_data', v_weekly_data
+//     );
+//   END;
+//   $function$
+//   
+// FUNCTION handle_new_user()
+//   CREATE OR REPLACE FUNCTION public.handle_new_user()
+//    RETURNS trigger
+//    LANGUAGE plpgsql
+//    SECURITY DEFINER
+//   AS $function$
+//   BEGIN
+//     INSERT INTO public.profiles (id, full_name, email, role, is_active)
+//     VALUES (
+//       NEW.id,
+//       COALESCE(NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1)),
+//       NEW.email,
+//       'estagiaria',
+//       true
+//     ) ON CONFLICT (id) DO UPDATE SET 
+//       email = EXCLUDED.email;
+//     RETURN NEW;
+//   END;
+//   $function$
+//   
+
+// --- INDEXES ---
+// Table: global_settings
+//   CREATE UNIQUE INDEX global_settings_key_key ON public.global_settings USING btree (key)
+
