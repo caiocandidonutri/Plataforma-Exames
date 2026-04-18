@@ -2,6 +2,7 @@
   "_versions": {
     "meta-proxy": 9,
     "whatsapp-gateway": 20,
-    "whatsapp-webhook": 1
+    "whatsapp-webhook": 1,
+    "export-report": 1
   }
 }

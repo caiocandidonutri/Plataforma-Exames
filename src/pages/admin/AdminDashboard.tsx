@@ -8,6 +8,8 @@ import { BusinessAlerts } from './components/BusinessAlerts'
 import { Button } from '@/components/ui/button'
 import { Download, Loader2 } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
+import { ExportDialog } from './components/ExportDialog'
+import { ExportHistorySheet } from './components/ExportHistorySheet'
 
 export default function AdminDashboard() {
   const [data, setData] = useState<{ metrics: any[]; subscribers: any[]; forecasts: any[] }>({
@@ -65,18 +67,10 @@ export default function AdminDashboard() {
             Gestão de monetização, retenção e previsões financeiras.
           </p>
         </div>
-        <Button
-          className="flex items-center gap-2"
-          onClick={() =>
-            toast({
-              title: 'Exportação iniciada',
-              description: 'O relatório está sendo gerado e o download começará em breve.',
-            })
-          }
-        >
-          <Download className="w-4 h-4" />
-          Exportar Relatório
-        </Button>
+        <div className="flex items-center gap-2">
+          <ExportHistorySheet />
+          <ExportDialog />
+        </div>
       </div>
 
       <BusinessAlerts subscribers={data.subscribers} metrics={currentMetrics} />
