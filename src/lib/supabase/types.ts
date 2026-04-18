@@ -1,11 +1,17 @@
 // AVOID UPDATING THIS FILE DIRECTLY. It is automatically generated.
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: '14.4'
+    PostgrestVersion: "14.4"
   }
   public: {
     Tables: {
@@ -111,11 +117,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'appointments_patient_id_fkey'
-            columns: ['patient_id']
+            foreignKeyName: "appointments_patient_id_fkey"
+            columns: ["patient_id"]
             isOneToOne: false
-            referencedRelation: 'patients'
-            referencedColumns: ['id']
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -152,11 +158,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'automated_flows_patient_id_fkey'
-            columns: ['patient_id']
+            foreignKeyName: "automated_flows_patient_id_fkey"
+            columns: ["patient_id"]
             isOneToOne: false
-            referencedRelation: 'patients'
-            referencedColumns: ['id']
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -184,11 +190,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'broadcasts_created_by_fkey'
-            columns: ['created_by']
+            foreignKeyName: "broadcasts_created_by_fkey"
+            columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -330,18 +336,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'historico_whatsapp_paciente_id_fkey'
-            columns: ['paciente_id']
+            foreignKeyName: "historico_whatsapp_paciente_id_fkey"
+            columns: ["paciente_id"]
             isOneToOne: false
-            referencedRelation: 'patients'
-            referencedColumns: ['id']
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'historico_whatsapp_profissional_id_fkey'
-            columns: ['profissional_id']
+            foreignKeyName: "historico_whatsapp_profissional_id_fkey"
+            columns: ["profissional_id"]
             isOneToOne: false
-            referencedRelation: 'contatos_profissionais'
-            referencedColumns: ['id']
+            referencedRelation: "contatos_profissionais"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -462,11 +468,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'leads_variacao_lp_id_fkey'
-            columns: ['variacao_lp_id']
+            foreignKeyName: "leads_variacao_lp_id_fkey"
+            columns: ["variacao_lp_id"]
             isOneToOne: false
-            referencedRelation: 'landing_page_variacoes'
-            referencedColumns: ['id']
+            referencedRelation: "landing_page_variacoes"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -503,20 +509,80 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'messages_broadcast_id_fkey'
-            columns: ['broadcast_id']
+            foreignKeyName: "messages_broadcast_id_fkey"
+            columns: ["broadcast_id"]
             isOneToOne: false
-            referencedRelation: 'broadcasts'
-            referencedColumns: ['id']
+            referencedRelation: "broadcasts"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'messages_patient_id_fkey'
-            columns: ['patient_id']
+            foreignKeyName: "messages_patient_id_fkey"
+            columns: ["patient_id"]
             isOneToOne: false
-            referencedRelation: 'patients'
-            referencedColumns: ['id']
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
           },
         ]
+      }
+      metrica_monetizacao: {
+        Row: {
+          arr: number
+          assinantes_ativos: number
+          assinantes_cancelados: number
+          assinantes_suspensos: number
+          cac: number
+          churn_rate: number
+          created_at: string
+          custo_aquisicao_total: number
+          data: string
+          id: string
+          ltv: number
+          metadados: Json | null
+          mrr: number
+          receita_clientes_existentes: number
+          receita_novos_clientes: number
+          ticket_medio: number
+          total_assinantes: number
+        }
+        Insert: {
+          arr: number
+          assinantes_ativos: number
+          assinantes_cancelados: number
+          assinantes_suspensos: number
+          cac: number
+          churn_rate: number
+          created_at?: string
+          custo_aquisicao_total: number
+          data: string
+          id?: string
+          ltv: number
+          metadados?: Json | null
+          mrr: number
+          receita_clientes_existentes: number
+          receita_novos_clientes: number
+          ticket_medio: number
+          total_assinantes: number
+        }
+        Update: {
+          arr?: number
+          assinantes_ativos?: number
+          assinantes_cancelados?: number
+          assinantes_suspensos?: number
+          cac?: number
+          churn_rate?: number
+          created_at?: string
+          custo_aquisicao_total?: number
+          data?: string
+          id?: string
+          ltv?: number
+          metadados?: Json | null
+          mrr?: number
+          receita_clientes_existentes?: number
+          receita_novos_clientes?: number
+          ticket_medio?: number
+          total_assinantes?: number
+        }
+        Relationships: []
       }
       patients: {
         Row: {
@@ -557,6 +623,51 @@ export type Database = {
         }
         Relationships: []
       }
+      previsao_financeira: {
+        Row: {
+          arr_previsto: number
+          assinantes_previstos: number
+          cenario: string
+          churn_previsto: number
+          confianca: number
+          created_at: string
+          data_previsao: string
+          id: string
+          metadados: Json | null
+          mrr_previsto: number
+          periodo: string
+          receita_novos_clientes_prevista: number
+        }
+        Insert: {
+          arr_previsto: number
+          assinantes_previstos: number
+          cenario: string
+          churn_previsto: number
+          confianca: number
+          created_at?: string
+          data_previsao: string
+          id?: string
+          metadados?: Json | null
+          mrr_previsto: number
+          periodo: string
+          receita_novos_clientes_prevista: number
+        }
+        Update: {
+          arr_previsto?: number
+          assinantes_previstos?: number
+          cenario?: string
+          churn_previsto?: number
+          confianca?: number
+          created_at?: string
+          data_previsao?: string
+          id?: string
+          metadados?: Json | null
+          mrr_previsto?: number
+          periodo?: string
+          receita_novos_clientes_prevista?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -583,6 +694,74 @@ export type Database = {
           role?: string
         }
         Relationships: []
+      }
+      relatorio_assinante: {
+        Row: {
+          assinante_id: string
+          conversas_whatsapp: number
+          created_at: string
+          data_inicio_assinatura: string
+          data_proxima_renovacao: string
+          data_relatorio: string
+          exames_processados: number
+          id: string
+          motivo_cancelamento: string | null
+          plano_atual: string
+          recomendacao: string | null
+          relatorios_gerados: number
+          risco_churn: string
+          status: string
+          tempo_assinatura_dias: number
+          uso_plataforma_percentual: number
+          valor_mensal: number
+        }
+        Insert: {
+          assinante_id: string
+          conversas_whatsapp: number
+          created_at?: string
+          data_inicio_assinatura: string
+          data_proxima_renovacao: string
+          data_relatorio?: string
+          exames_processados: number
+          id?: string
+          motivo_cancelamento?: string | null
+          plano_atual: string
+          recomendacao?: string | null
+          relatorios_gerados: number
+          risco_churn: string
+          status: string
+          tempo_assinatura_dias: number
+          uso_plataforma_percentual: number
+          valor_mensal: number
+        }
+        Update: {
+          assinante_id?: string
+          conversas_whatsapp?: number
+          created_at?: string
+          data_inicio_assinatura?: string
+          data_proxima_renovacao?: string
+          data_relatorio?: string
+          exames_processados?: number
+          id?: string
+          motivo_cancelamento?: string | null
+          plano_atual?: string
+          recomendacao?: string | null
+          relatorios_gerados?: number
+          risco_churn?: string
+          status?: string
+          tempo_assinatura_dias?: number
+          uso_plataforma_percentual?: number
+          valor_mensal?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "relatorio_assinante_assinante_id_fkey"
+            columns: ["assinante_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       social_connections: {
         Row: {
@@ -617,11 +796,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'social_connections_persona_id_fkey'
-            columns: ['persona_id']
+            foreignKeyName: "social_connections_persona_id_fkey"
+            columns: ["persona_id"]
             isOneToOne: false
-            referencedRelation: 'ai_personas'
-            referencedColumns: ['id']
+            referencedRelation: "ai_personas"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -667,18 +846,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'whatsapp_instances_owner_id_fkey'
-            columns: ['owner_id']
+            foreignKeyName: "whatsapp_instances_owner_id_fkey"
+            columns: ["owner_id"]
             isOneToOne: false
-            referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'whatsapp_instances_persona_id_fkey'
-            columns: ['persona_id']
+            foreignKeyName: "whatsapp_instances_persona_id_fkey"
+            columns: ["persona_id"]
             isOneToOne: false
-            referencedRelation: 'ai_personas'
-            referencedColumns: ['id']
+            referencedRelation: "ai_personas"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -710,31 +889,33 @@ export type Database = {
   }
 }
 
-type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, 'public'>]
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
-    | keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
-        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
-      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
-    ? (DefaultSchema['Tables'] & DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -743,23 +924,23 @@ export type Tables<
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema['Tables']
+    | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
-    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -768,23 +949,23 @@ export type TablesInsert<
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema['Tables']
+    | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
-    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -793,36 +974,36 @@ export type TablesUpdate<
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema['Enums']
+    | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
-    ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof DefaultSchema['CompositeTypes']
+    | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
-    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
-  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
-    ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
 
 export const Constants = {
@@ -830,6 +1011,7 @@ export const Constants = {
     Enums: {},
   },
 } as const
+
 
 // ====== DATABASE EXTENDED CONTEXT (auto-generated) ======
 // This section contains actual PostgreSQL column types, constraints, RLS policies,
@@ -966,6 +1148,24 @@ export const Constants = {
 //   created_at: timestamp with time zone (not null, default: now())
 //   status: text (not null, default: 'sent'::text)
 //   broadcast_id: uuid (nullable)
+// Table: metrica_monetizacao
+//   id: uuid (not null, default: gen_random_uuid())
+//   data: date (not null)
+//   mrr: numeric (not null)
+//   arr: numeric (not null)
+//   total_assinantes: integer (not null)
+//   assinantes_ativos: integer (not null)
+//   assinantes_cancelados: integer (not null)
+//   assinantes_suspensos: integer (not null)
+//   cac: numeric (not null)
+//   ltv: numeric (not null)
+//   churn_rate: numeric (not null)
+//   ticket_medio: numeric (not null)
+//   receita_novos_clientes: numeric (not null)
+//   receita_clientes_existentes: numeric (not null)
+//   custo_aquisicao_total: numeric (not null)
+//   metadados: jsonb (nullable)
+//   created_at: timestamp with time zone (not null, default: now())
 // Table: patients
 //   id: uuid (not null, default: gen_random_uuid())
 //   name: text (not null)
@@ -977,6 +1177,19 @@ export const Constants = {
 //   needs_attention: boolean (not null, default: false)
 //   priority_level: text (not null, default: 'medium'::text)
 //   ai_enabled: boolean (not null, default: true)
+// Table: previsao_financeira
+//   id: uuid (not null, default: gen_random_uuid())
+//   data_previsao: date (not null)
+//   periodo: text (not null)
+//   mrr_previsto: numeric (not null)
+//   arr_previsto: numeric (not null)
+//   assinantes_previstos: integer (not null)
+//   churn_previsto: numeric (not null)
+//   receita_novos_clientes_prevista: numeric (not null)
+//   cenario: text (not null)
+//   confianca: numeric (not null)
+//   metadados: jsonb (nullable)
+//   created_at: timestamp with time zone (not null, default: now())
 // Table: profiles
 //   id: uuid (not null)
 //   full_name: text (not null)
@@ -984,6 +1197,24 @@ export const Constants = {
 //   created_at: timestamp with time zone (not null, default: now())
 //   is_active: boolean (not null, default: true)
 //   email: text (nullable)
+// Table: relatorio_assinante
+//   id: uuid (not null, default: gen_random_uuid())
+//   assinante_id: uuid (not null)
+//   data_relatorio: timestamp with time zone (not null, default: now())
+//   plano_atual: text (not null)
+//   data_inicio_assinatura: date (not null)
+//   data_proxima_renovacao: date (not null)
+//   valor_mensal: numeric (not null)
+//   status: text (not null)
+//   motivo_cancelamento: text (nullable)
+//   tempo_assinatura_dias: integer (not null)
+//   exames_processados: integer (not null)
+//   relatorios_gerados: integer (not null)
+//   conversas_whatsapp: integer (not null)
+//   uso_plataforma_percentual: integer (not null)
+//   risco_churn: text (not null)
+//   recomendacao: text (nullable)
+//   created_at: timestamp with time zone (not null, default: now())
 // Table: social_connections
 //   id: uuid (not null, default: gen_random_uuid())
 //   platform: text (not null)
@@ -1048,13 +1279,20 @@ export const Constants = {
 //   FOREIGN KEY messages_patient_id_fkey: FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
 //   PRIMARY KEY messages_pkey: PRIMARY KEY (id)
 //   CHECK messages_sender_type_check: CHECK ((sender_type = ANY (ARRAY['patient'::text, 'staff'::text, 'ia'::text])))
+// Table: metrica_monetizacao
+//   PRIMARY KEY metrica_monetizacao_pkey: PRIMARY KEY (id)
 // Table: patients
 //   PRIMARY KEY patients_pkey: PRIMARY KEY (id)
 //   CHECK patients_priority_level_check: CHECK ((priority_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text])))
+// Table: previsao_financeira
+//   PRIMARY KEY previsao_financeira_pkey: PRIMARY KEY (id)
 // Table: profiles
 //   FOREIGN KEY profiles_id_fkey: FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE
 //   PRIMARY KEY profiles_pkey: PRIMARY KEY (id)
 //   CHECK profiles_role_check: CHECK ((role = ANY (ARRAY['admin'::text, 'vendedora'::text, 'estagiaria'::text, 'marketing'::text])))
+// Table: relatorio_assinante
+//   FOREIGN KEY relatorio_assinante_assinante_id_fkey: FOREIGN KEY (assinante_id) REFERENCES patients(id) ON DELETE CASCADE
+//   PRIMARY KEY relatorio_assinante_pkey: PRIMARY KEY (id)
 // Table: social_connections
 //   FOREIGN KEY social_connections_owner_id_fkey: FOREIGN KEY (owner_id) REFERENCES auth.users(id) ON DELETE CASCADE
 //   FOREIGN KEY social_connections_persona_id_fkey: FOREIGN KEY (persona_id) REFERENCES ai_personas(id) ON DELETE SET NULL
@@ -1145,6 +1383,9 @@ export const Constants = {
 //     WITH CHECK: true
 //   Policy "Messages viewable by authorized" (SELECT, PERMISSIVE) roles={public}
 //     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'vendedora'::text, 'estagiaria'::text]))
+// Table: metrica_monetizacao
+//   Policy "admin_all_metrica_monetizacao" (ALL, PERMISSIVE) roles={authenticated}
+//     USING: (EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.role = ANY (ARRAY['admin'::text, 'marketing'::text])))))
 // Table: patients
 //   Policy "Patients are deletable by admin" (DELETE, PERMISSIVE) roles={public}
 //     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = 'admin'::text)
@@ -1154,11 +1395,17 @@ export const Constants = {
 //     USING: true
 //   Policy "Patients are viewable by authorized" (SELECT, PERMISSIVE) roles={public}
 //     USING: (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'vendedora'::text, 'estagiaria'::text]))
+// Table: previsao_financeira
+//   Policy "admin_all_previsao_financeira" (ALL, PERMISSIVE) roles={authenticated}
+//     USING: (EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.role = ANY (ARRAY['admin'::text, 'marketing'::text])))))
 // Table: profiles
 //   Policy "Profiles are viewable by everyone" (SELECT, PERMISSIVE) roles={public}
 //     USING: true
 //   Policy "Profiles can be updated by admin" (UPDATE, PERMISSIVE) roles={public}
 //     USING: (( SELECT profiles_1.role    FROM profiles profiles_1   WHERE (profiles_1.id = auth.uid())) = 'admin'::text)
+// Table: relatorio_assinante
+//   Policy "admin_all_relatorio_assinante" (ALL, PERMISSIVE) roles={authenticated}
+//     USING: (EXISTS ( SELECT 1    FROM profiles   WHERE ((profiles.id = auth.uid()) AND (profiles.role = ANY (ARRAY['admin'::text, 'marketing'::text])))))
 // Table: social_connections
 //   Policy "social_connections_owner_all" (ALL, PERMISSIVE) roles={authenticated}
 //     USING: ((owner_id = auth.uid()) OR (( SELECT profiles.role    FROM profiles   WHERE (profiles.id = auth.uid())) = ANY (ARRAY['admin'::text, 'marketing'::text])))
@@ -1184,7 +1431,7 @@ export const Constants = {
 //     IF v_admin_role != 'admin' THEN
 //       RAISE EXCEPTION 'Acesso negado. Apenas administradores podem gerenciar usuários.';
 //     END IF;
-//
+//   
 //     IF p_action = 'create' THEN
 //       v_uid := gen_random_uuid();
 //       INSERT INTO auth.users (
@@ -1200,34 +1447,34 @@ export const Constants = {
 //         false, 'authenticated', 'authenticated',
 //         '', '', '', '', '', NULL, '', '', ''
 //       );
-//
+//       
 //       -- Triggers should have created the profile, so we just update it
 //       UPDATE public.profiles SET role = p_role, is_active = p_is_active, full_name = p_full_name, email = p_email WHERE id = v_uid;
 //       RETURN jsonb_build_object('success', true, 'id', v_uid);
-//
+//   
 //     ELSIF p_action = 'update' THEN
 //       IF p_email IS NOT NULL THEN
 //         UPDATE auth.users SET email = p_email, updated_at = NOW() WHERE id = p_user_id;
 //       END IF;
-//
+//       
 //       IF p_password IS NOT NULL AND p_password != '' THEN
 //         UPDATE auth.users SET encrypted_password = crypt(p_password, gen_salt('bf')), updated_at = NOW() WHERE id = p_user_id;
 //       END IF;
-//
-//       UPDATE public.profiles SET
-//         role = COALESCE(p_role, role),
-//         is_active = COALESCE(p_is_active, is_active),
+//   
+//       UPDATE public.profiles SET 
+//         role = COALESCE(p_role, role), 
+//         is_active = COALESCE(p_is_active, is_active), 
 //         full_name = COALESCE(p_full_name, full_name),
 //         email = COALESCE(p_email, email)
 //       WHERE id = p_user_id;
-//
+//       
 //       RETURN jsonb_build_object('success', true, 'id', p_user_id);
 //     ELSE
 //       RAISE EXCEPTION 'Ação inválida';
 //     END IF;
 //   END;
 //   $function$
-//
+//   
 // FUNCTION get_marketing_metrics()
 //   CREATE OR REPLACE FUNCTION public.get_marketing_metrics()
 //    RETURNS jsonb
@@ -1247,23 +1494,23 @@ export const Constants = {
 //     IF v_role NOT IN ('admin', 'vendedora', 'marketing') THEN
 //       RAISE EXCEPTION 'Acesso negado.';
 //     END IF;
-//
+//   
 //     -- Leads Volume
 //     SELECT count(*) INTO v_leads_total FROM public.patients;
-//
+//     
 //     SELECT jsonb_object_agg(origin, count) INTO v_leads_by_origin
 //     FROM (SELECT origin, count(*) FROM public.patients GROUP BY origin) t;
-//
+//   
 //     -- Messages Volume
 //     SELECT count(*) INTO v_messages_volume FROM public.messages;
-//
+//   
 //     -- Conversion Rate (Completed or Active flows / total)
-//     SELECT
-//       CASE WHEN count(*) = 0 THEN 0
-//       ELSE (count(*) FILTER (WHERE status IN ('Scheduled', 'Attended', 'Follow-up'))::numeric / count(*)) * 100
+//     SELECT 
+//       CASE WHEN count(*) = 0 THEN 0 
+//       ELSE (count(*) FILTER (WHERE status IN ('Scheduled', 'Attended', 'Follow-up'))::numeric / count(*)) * 100 
 //       END INTO v_conversion_rate
 //     FROM public.patients;
-//
+//   
 //     -- Aggregated weekly sample for charts
 //     v_weekly_data := '[
 //       {"name": "Seg", "leads": 40, "perdidos": 5},
@@ -1274,7 +1521,7 @@ export const Constants = {
 //       {"name": "Sáb", "leads": 25, "perdidos": 1},
 //       {"name": "Dom", "leads": 35, "perdidos": 2}
 //     ]'::jsonb;
-//
+//   
 //     RETURN jsonb_build_object(
 //       'leads_total', v_leads_total,
 //       'leads_by_origin', COALESCE(v_leads_by_origin, '{}'::jsonb),
@@ -1284,7 +1531,7 @@ export const Constants = {
 //     );
 //   END;
 //   $function$
-//
+//   
 // FUNCTION handle_new_user()
 //   CREATE OR REPLACE FUNCTION public.handle_new_user()
 //    RETURNS trigger
@@ -1299,12 +1546,12 @@ export const Constants = {
 //       NEW.email,
 //       'estagiaria',
 //       true
-//     ) ON CONFLICT (id) DO UPDATE SET
+//     ) ON CONFLICT (id) DO UPDATE SET 
 //       email = EXCLUDED.email;
 //     RETURN NEW;
 //   END;
 //   $function$
-//
+//   
 
 // --- INDEXES ---
 // Table: global_settings
@@ -1315,3 +1562,4 @@ export const Constants = {
 //   CREATE INDEX idx_leads_data_captura ON public.leads USING btree (data_captura)
 //   CREATE INDEX idx_leads_profissao ON public.leads USING btree (profissao)
 //   CREATE UNIQUE INDEX leads_email_key ON public.leads USING btree (email)
+
