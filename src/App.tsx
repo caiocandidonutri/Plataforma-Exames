@@ -11,6 +11,8 @@ import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
 import Report from './pages/Report'
 import Dashboard from './pages/Dashboard'
+import LandingPage from './pages/LandingPage'
+import LeadSuccess from './pages/LeadSuccess'
 
 const App = () => (
   <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="/relatorio/:id" element={<Report />} />
+        <Route path="/landing-page" element={<LandingPage />} />
+        <Route path="/sucesso-lead" element={<LeadSuccess />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </TooltipProvider>
